@@ -8,11 +8,14 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/objeto
+POST http://127.0.0.1:8000/usuarios
 Content-Type: application/json
 Authorization: Bearer {{ login.response.body.token }}
 
 {
-  "title" : "primer post",
-  "content" : "mucho bla bla bla"
+" id": 8,
+ "nombre": "Jesus",
+  "apellido": "Arias",
+   "mail": "jesus@jesus.com",
+   " contrasenia": ""
 }

@@ -1,8 +1,8 @@
 let Usuarios = [{
         id: 1,
-        nombre: "Jesus",
-        apellido: "Arias",
-        mail: "jesus@jesus.com",
+        nombre: "Esteban",
+        apellido: "Ferrari",
+        mail: "EstebanF@gmail.com",
         contrasenia: ""
     },
     {
@@ -14,18 +14,31 @@ let Usuarios = [{
     },
     {
         id: 3,
-        nombre: "Jesus",
-        apellido: "Arias",
-        mail: "jesus@jesus.com",
+        nombre: "maxi",
+        apellido: "Bounnet",
+        mail: "maxi@yahoo.com",
         contrasenia: ""
     },
     {
         id: 4,
-        nombre: "Jesus",
-        apellido: "Arias",
-        mail: "jesus@jesus.com",
+        nombre: "Namu",
+        apellido: "Lamour",
+        mail: "nanu@hotmail.com",
         contrasenia: ""
     },
+    {
+      id: 5,
+      nombre: "Cristina",
+      apellido: "Jeclobsic",
+      mail: "cistian@apelidoDificil.com",
+      contrasenia: ""
+  },{
+    id: 6,
+    nombre: "taynah",
+    apellido: "no_lose",
+    mail: "tay@portuñol.com",
+    contrasenia: ""
+}
 ];
 
 const getTodos = (filter) => { 
@@ -49,15 +62,22 @@ const getTodos = (filter) => {
       if(filter.buscar){
         filtrar = filtrar.filter(e => e.nombre.includes(filter.buscar) || e.apellido.includes(filter.buscar) || e.mail.includes(filter.buscar) || e.contrasenia.includes(filter.buscar));
       }
-      
+      /*
       if(filter.BuscadorMulti){
         const palabrasABuscar = filter.BuscadorMulti.split(',');
         filtrar = filtrar.filter(usuarios => {
             const filtro = buscarPalabra.filter(palabra => usuarios.nombre.includes(palabra) || usuarios.apellido.includes(palabra) || usuarios.mail.includes(palabra) || usuarios.contrasenia.includes(palabra));
             return filtro.length > 0 ;
         });
+      }*/
+   
+      if(filter.multisearch){
+        const palabrasABuscar = filter.multisearch.split(',');
+        filtrado = filtrado.filter(entry => { 
+          const filtro = palabrasABuscar.filter(palabra => p.nombre.includes(palabra) || p.mail.includes(palabra))
+          return filtro.length > 0      
+        })
       }
-
 
       return filtrar
 } 
@@ -73,12 +93,15 @@ const borrar = (id) => {
     }
     return false;
 }
-const editar = (id) => {
-    const index = Usuarios.findIndex((registro) => registro.id == id);
+const editar =(id, body) => { 
+  const index = Usuarios.findIndex((registro) => registro.id == id);
     if (index >= 0) {
-        Usuarios[index] = req.body;
+        Usuarios[index] = body;
         return true
     }
     return false
 } 
+
+
+
 module.exports = { getTodos, getUno, guardar, borrar, editar};
