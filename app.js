@@ -4,6 +4,7 @@ const middleware = require("./utils/middleware");
 const keepaliveController = require("./controller/keepalive");
 const entryController = require("./controller/entry");
 const loginController = require("./controller/login");
+const usuariosController = require("./controller/usuarios");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(middleware.processToken);
 
 app.use("/keepalive", keepaliveController);
 app.use("/objeto", entryController);
+app.use("/usuarios", usuariosController);
 //app.use("/login", loginController);//
 
 app.use(middleware.unknownEndpoint);
