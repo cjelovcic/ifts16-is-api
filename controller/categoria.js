@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const middleware = require('../utils/middleware');
 
 const router = require("express").Router();
-let dao = require("../dataccess/entry");
+let dao = require("../dataccess/categoria");
 
 /* Obtener todo */
 router.get("/", (req, res) => {
@@ -22,29 +22,30 @@ router.get("/:id", (req, res) => {
 });
 
 /* Agregar un elemento */
-
+/*
 // POST funcionando sin usuario logueado
 router.post("/", (req, res) => {
+  
+  const body = { ...req.body, id: uuidv4() };
+  dao.save(body);
+  res.status(200).json(body);
+});
+*/
 
-    const body = {...req.body, id: uuidv4() };
+// POST funcionando con usuario logueado
+router.post("/", middleware.validarUserLogin, (req, res) => {
+
+    const body = {...req.body, id: uuidv4(), user: req.user };
     dao.save(body);
     res.status(200).json(body);
 });
 
-// POST funcionando con usuario logueado
-// router.post("/", middleware.validarUserLogin, (req, res) => {
-
-//     const body = {...req.body, id: uuidv4(), user: req.user };
-//     dao.save(body);
-//     res.status(200).json(body);
-// });
-
-/* Borrar un elemento */
+// Borrar un elemento 
 /*router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  Entry = Entry.filter((registro) => registro.id != id);
-  res.sendStatus(201);
-});*/
+    const id = req.params.id;
+    categoria = categoria.filter((registro) => registro.id != id);
+    res.sendStatus(201);
+}); */
 
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
@@ -60,8 +61,6 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const id = req.params.id;
 
-    // const body = {...req.body, id, user: req.user };
-    // dao.save(body);
     if (dao.update(id, req.body)) {
         res.sendStatus(202);
     } else {
